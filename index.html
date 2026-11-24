@@ -65,7 +65,7 @@
   .sec{margin:28px 0 12px;color:var(--gold);font-weight:800;font-size:13px;letter-spacing:.18em;display:flex;align-items:center;gap:10px}
   .sec::before,.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,201,51,.6),transparent)}
   a.btn{display:flex;align-items:center;gap:14px;text-align:left;text-decoration:none;color:var(--text);padding:13px 16px;margin:0 0 12px;border-radius:18px;
-        background:rgba(30,10,56,.78);border:1px solid rgba(255,201,51,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:transform .15s}
+        background:rgba(30,10,56,.88);border:1px solid rgba(255,201,51,.35);transition:transform .15s}
   a.btn:active{transform:scale(.97)}
   a.btn .ic{flex:none;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:24px}
   a.btn b{display:block;font-size:17px}
@@ -88,10 +88,12 @@
   @media (min-width:700px){.cat{width:130px;bottom:-76px;left:8px}}
 
   /* карта дня */
-  .ov{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;flex-direction:column;padding:20px 16px;background:rgba(10,3,22,.82);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-  .ov.show{display:flex}
+  .ov{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px 16px;background:rgba(10,3,22,.94);
+      visibility:hidden;opacity:0;pointer-events:none;transition:opacity .35s ease,visibility 0s linear .35s}
+  .ov.show{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .35s ease,visibility 0s}
+  .scene.hide{opacity:0}
   .scene{perspective:1200px;width:min(64vw,250px);aspect-ratio:2/3;position:relative}
-  .card{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+  .card{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.8,.2,1);will-change:transform}
   .card.flip{transform:rotateY(180deg)}
   .face{position:absolute;inset:0;border-radius:14px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 18px 50px rgba(0,0,0,.6),0 0 40px rgba(255,201,51,.25)}
   .face img{width:100%;height:100%;display:block;object-fit:cover}
@@ -111,7 +113,7 @@
   .acts button{border:0;border-radius:999px;padding:11px 18px;font:800 15px/1 -apple-system,sans-serif;cursor:pointer}
   .acts .thx{background:linear-gradient(135deg,var(--gold),#ff9f1a);color:#1a0b2e}
   .acts .cls{background:rgba(255,255,255,.12);color:#fff}
-  .fly{position:fixed;z-index:60;border-radius:8px;overflow:hidden;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+  .fly{position:fixed;z-index:60;border-radius:14px;overflow:hidden;pointer-events:none;box-shadow:0 18px 50px rgba(0,0,0,.6);transform-origin:50% 50%;will-change:transform}
   .fly img{width:100%;height:100%;display:block}
   .toast{position:fixed;left:50%;bottom:110px;z-index:70;transform:translate(-50%,20px);opacity:0;background:rgba(10,3,22,.92);border:1px solid var(--gold);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;transition:.3s;pointer-events:none;max-width:90vw}
   .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -236,21 +238,42 @@
   var canVibrate=typeof navigator.vibrate==='function';
   function buzz(p){ if(canVibrate){ try{ navigator.vibrate(0); navigator.vibrate(p) }catch(e){} } }
 
-  // ---------- карта дня: одна на день ----------
-  function dayKey(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate() }
+  // ---------- карта дня: перемешанная колода ----------
+  // У каждого человека свой случайный порядок всех 22 карт. Каждый новый день — следующая карта колоды,
+  // поэтому повторов нет, пока не вытянуты все 22. Потом колода перемешивается заново
+  // (и первая карта новой колоды не совпадает с последней картой старой).
+  var N=CARDS.length;
+  function dayKey(d){ d=d||new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate() }
   function hash(s){ var h=2166136261; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619) } return Math.abs(h) }
-  function pickToday(){
-    var k=dayKey(), saved=store('mf_card');
-    if(saved){ var p=saved.split('|'); if(p[0]===k) return {idx:+p[1], fresh:false} }
-    var prev=saved? +saved.split('|')[1] : -1, idx;
-    var seed=store('mf_seed'); if(!seed){ seed=String(Math.random()); store('mf_seed',seed) }
-    idx = hash(k+'|'+(seed||navigator.userAgent+screen.width)) % CARDS.length;
-    if(idx===prev) idx=(idx+7)%CARDS.length;                 // не повторять вчерашнюю
-    store('mf_card', k+'|'+idx);
-    return {idx:idx, fresh:true};
+  function shuffled(avoidFirst){
+    var a=[], i, j, t; for(i=0;i<N;i++) a.push(i);
+    for(i=N-1;i>0;i--){ j=Math.floor(Math.random()*(i+1)); t=a[i]; a[i]=a[j]; a[j]=t }
+    if(a[0]===avoidFirst){ j=1+Math.floor(Math.random()*(N-1)); t=a[0]; a[0]=a[j]; a[j]=t }
+    return a;
   }
+  var canStore=(function(){ try{ localStorage.setItem('mf_t','1'); var ok=localStorage.getItem('mf_t')==='1'; localStorage.removeItem('mf_t'); return ok }catch(e){ return false } })();
+  function loadDeck(){ try{ var d=JSON.parse(store('mf_deck')||'null'); if(d && d.order && d.order.length===N) return d }catch(e){} return null }
+  function saveDeck(d){ store('mf_deck', JSON.stringify(d)) }
+  function drawFor(k){                                    // k — дата (строка); возвращает {idx, fresh}
+    if(!canStore) return {idx: hash(k+navigator.userAgent) % N, fresh:true};   // без памяти браузера — карта по дате
+    var d=loadDeck();
+    if(d && d.day===k) return {idx:d.order[d.pos], fresh:false};
+    if(!d){
+      d={order:shuffled(-1), pos:-1, day:null};
+      var old=store('mf_card');                           // карта, выпавшая сегодня в прошлой версии сайта
+      if(old){ var p=old.split('|'), c=+p[1]; if(p[0]===k && c>=0 && c<N){ d.order.splice(d.order.indexOf(c),1); d.order.unshift(c); d.pos=0; d.day=k; saveDeck(d); return {idx:c, fresh:false} } }
+    }
+    var last = d.pos>=0 ? d.order[d.pos] : -1;
+    d.pos++;
+    if(d.pos>=N){ d.order=shuffled(last); d.pos=0 }
+    d.day=k; saveDeck(d);
+    return {idx:d.order[d.pos], fresh:true};
+  }
+  function pickToday(){ return drawFor(dayKey()) }
   var todayIdx=null;
-  (function(){ var s=store('mf_card'); if(s){ var p=s.split('|'); if(p[0]===dayKey()) todayIdx=+p[1] } })();
+  (function(){ var d=loadDeck(), k=dayKey(); if(d && d.day===k) todayIdx=d.order[d.pos];
+    else { var s=store('mf_card'); if(s){ var p=s.split('|'); if(p[0]===k) todayIdx=+p[1] } } })();
+  window.__mfDraw = drawFor;                              // для проверки колоды (ничего не ломает)
 
   function fillCard(i){
     var c=CARDS[i], u=lang==='uk';
@@ -274,29 +297,47 @@
     document.getElementById('cd').textContent=(h<10?'0':'')+h+':'+(mi<10?'0':'')+mi+':'+(se<10?'0':'')+se;
     if(s===0 && ov.classList.contains('show')){ /* новый день */ }
   }
+  var scene=document.querySelector('.scene'), cardImg=document.getElementById('cardImg'), closeT=0;
+  function whenLoaded(im, cb){ var done=false, go=function(){ if(!done){ done=true; cb() } };
+    if(im.complete && im.naturalWidth) return go();
+    if(im.decode) im.decode().then(go,go); im.addEventListener('load',go,{once:true}); setTimeout(go,1500) }
+  function reveal(delay){
+    setTimeout(function(){ whenLoaded(cardImg, function(){ card.classList.add('flip'); ov.classList.add('reveal'); buzz([20,60,120]) }) }, delay);
+  }
   function openCard(fresh, fromAva){
+    clearTimeout(closeT);
     fillCard(todayIdx);
     document.getElementById('again').style.display = fresh ? 'none' : 'block';
     card.classList.remove('flip'); ov.classList.remove('reveal');
     countdown(); clearInterval(cdT); cdT=setInterval(countdown,1000);
+    ov.classList.add('show');
     if(fresh && fromAva){
-      // рубашка вылетает из аватарки в центр экрана
-      var a=document.getElementById('ava').getBoundingClientRect(), f=document.createElement('div'); f.className='fly';
-      f.innerHTML='<img src="img/card_back.jpg" alt="">'; document.body.appendChild(f);
-      var w=Math.min(innerWidth*.64,250), h=w*1.5;
-      var fr=[{left:(a.left+a.width/2-20)+'px',top:(a.top+a.height/2-30)+'px',width:'40px',height:'60px',transform:'rotate(-25deg)'},
-              {left:(innerWidth/2-w/2)+'px',top:(innerHeight*.42-h/2-40)+'px',width:w+'px',height:h+'px',transform:'rotate(8deg)',offset:.7},
-              {left:(innerWidth/2-w/2)+'px',top:(innerHeight*.42-h/2)+'px',width:w+'px',height:h+'px',transform:'rotate(0)'}];
-      f.animate(fr,{duration:750,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}).onfinish=function(){
-        ov.classList.add('show'); f.remove();
-        setTimeout(function(){ card.classList.add('flip'); ov.classList.add('reveal'); buzz([20,60,120]) },350);
+      // рубашка вылетает из аватарки и приземляется ровно на место карты (анимация только transform — без рывков)
+      scene.classList.add('hide');
+      var t=scene.getBoundingClientRect(), a=document.getElementById('ava').getBoundingClientRect();
+      var f=document.createElement('div'); f.className='fly';
+      f.style.left=t.left+'px'; f.style.top=t.top+'px'; f.style.width=t.width+'px'; f.style.height=t.height+'px';
+      f.innerHTML='<img src="img/card_back.jpg" alt="" style="width:100%;height:100%;display:block">'; document.body.appendChild(f);
+      var dx=(a.left+a.width/2)-(t.left+t.width/2), dy=(a.top+a.height/2)-(t.top+t.height/2), s0=a.width*.45/t.width;
+      f.animate([
+        {transform:'translate('+dx+'px,'+dy+'px) scale('+s0+') rotate(-25deg)',opacity:.6},
+        {transform:'translate(0,-34px) scale(1.04) rotate(6deg)',opacity:1,offset:.7},
+        {transform:'translate(0,0) scale(1) rotate(0deg)',opacity:1}
+      ],{duration:780,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}).onfinish=function(){
+        scene.classList.remove('hide');
+        requestAnimationFrame(function(){ f.remove() });
+        reveal(260);
       };
     } else {
-      ov.classList.add('show');
-      setTimeout(function(){ card.classList.add('flip'); ov.classList.add('reveal') },250);
+      scene.classList.remove('hide');
+      reveal(320);
     }
   }
-  function closeCard(){ ov.classList.remove('show','reveal'); card.classList.remove('flip'); clearInterval(cdT); if(todayIdx!==null) document.getElementById('todayBtn').classList.add('show') }
+  function closeCard(){
+    ov.classList.remove('show'); clearInterval(cdT);
+    clearTimeout(closeT); closeT=setTimeout(function(){ ov.classList.remove('reveal'); card.classList.remove('flip') },380);  // переворачиваем обратно уже невидимо
+    if(todayIdx!==null) document.getElementById('todayBtn').classList.add('show');
+  }
   document.getElementById('cls').addEventListener('click',closeCard);
   ov.addEventListener('click',function(e){ if(e.target===ov) closeCard() });
   document.getElementById('todayBtn').addEventListener('click',function(){ if(todayIdx!==null) openCard(false,false) });
