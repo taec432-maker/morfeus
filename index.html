@@ -113,6 +113,14 @@
   .acts button{border:0;border-radius:999px;padding:11px 18px;font:800 15px/1 -apple-system,sans-serif;cursor:pointer}
   .acts .thx{background:linear-gradient(135deg,var(--gold),#ff9f1a);color:#1a0b2e}
   .acts .cls{background:rgba(255,255,255,.12);color:#fff}
+  .extbox{max-width:340px;text-align:center}
+  .extlock{font-size:44px}
+  .extbox h2{margin:6px 0 6px;font:700 25px/1.15 "Cormorant Garamond",Georgia,serif;color:var(--gold)}
+  .extbox p{margin:0 0 12px;font-size:16px;line-height:1.45}
+  .exturl{margin:0 0 14px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.08);border:1px dashed rgba(255,201,51,.5);font-size:14px;word-break:break-all;user-select:all;-webkit-user-select:all}
+  .extbox .thx{border:0;border-radius:999px;padding:14px 22px;font:800 17px/1 -apple-system,sans-serif;cursor:pointer;background:linear-gradient(135deg,var(--gold),#ff9f1a);color:#1a0b2e}
+  .extbox .exthint{margin:14px 0 0;font-size:13px;color:var(--muted)}
+  .extlink{display:inline-block;border-radius:999px;padding:11px 18px;font:800 15px/1 -apple-system,sans-serif;background:rgba(255,255,255,.12);color:#fff;text-decoration:none}
   .fly{position:fixed;z-index:60;border-radius:14px;overflow:hidden;pointer-events:none;box-shadow:0 18px 50px rgba(0,0,0,.6);transform-origin:50% 50%;will-change:transform}
   .fly img{width:100%;height:100%;display:block}
   .toast{position:fixed;left:50%;bottom:110px;z-index:70;transform:translate(-50%,20px);opacity:0;background:rgba(10,3,22,.92);border:1px solid var(--gold);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;transition:.3s;pointer-events:none;max-width:90vw}
@@ -139,13 +147,13 @@
   <button class="today" id="todayBtn"><img id="todayImg" src="img/card_back.jpg" alt=""><span><small data-i="today">Твоя карта дня</small><b id="todayName"></b></span></button>
 
   <div class="sec" data-i="donT">ДОНАТ</div>
-  <a class="btn main" id="jar" href="https://send.monobank.ua/jar/tfSnGPdcs" target="_blank" rel="noopener"><span class="ic jar">🫙</span><span><b data-i="jar">Донат в Банку «На мечту»</b><small data-i="jarS">Любой картой, Apple Pay или Google Pay</small></span><span class="go">›</span></a>
+  <a class="btn main" id="jar" data-ext href="https://send.monobank.ua/jar/tfSnGPdcs" target="_blank" rel="noopener"><span class="ic jar">🫙</span><span><b data-i="jar">Донат в Банку «На мечту»</b><small data-i="jarS">Любой картой, Apple Pay или Google Pay</small></span><span class="go">›</span></a>
   <a class="btn" id="mono" href="#"><span class="ic mono">mono</span><span><b data-i="mono">Перевод на карту Монобанка</b><small id="monoSub" data-i="monoS">Нажми, чтобы скопировать номер · •••• 7504</small></span><span class="go">›</span></a>
 
   <div class="sec" data-i="pagesT">МОИ СТРАНИЦЫ</div>
-  <a class="btn" href="https://www.tiktok.com/@catmorfeus" target="_blank" rel="noopener"><span class="ic tt"><svg width="31" height="31" viewBox="0 0 24 24" fill="#fff"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9a7.3 7.3 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg></span><span><b data-i="tt1">Мой основной аккаунт</b></span><span class="go">›</span></a>
-  <a class="btn" href="https://www.tiktok.com/@yurkaleo" target="_blank" rel="noopener"><span class="ic tt"><svg width="31" height="31" viewBox="0 0 24 24" fill="#fff"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9a7.3 7.3 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg></span><span><b data-i="tt2">Мой запасной аккаунт</b></span><span class="go">›</span></a>
-  <a class="btn" href="https://t.me/morpheus22222" target="_blank" rel="noopener"><span class="ic tg"><svg width="31" height="31" viewBox="0 0 24 24" fill="#fff"><path d="M21.9 4.6 18.7 19.7c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9-8.2c.4-.4-.1-.6-.6-.2L6.3 13.3l-4.8-1.5c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.6z"/></svg></span><span><b data-i="tg">Мой Telegram-канал</b></span><span class="go">›</span></a>
+  <a class="btn" data-tt="7189722322201953285" href="https://www.tiktok.com/@catmorfeus" target="_blank" rel="noopener"><span class="ic tt"><svg width="31" height="31" viewBox="0 0 24 24" fill="#fff"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9a7.3 7.3 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg></span><span><b data-i="tt1">Мой основной аккаунт</b></span><span class="go">›</span></a>
+  <a class="btn" data-tt="7410411212621005856" href="https://www.tiktok.com/@yurkaleo" target="_blank" rel="noopener"><span class="ic tt"><svg width="31" height="31" viewBox="0 0 24 24" fill="#fff"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9a7.3 7.3 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg></span><span><b data-i="tt2">Мой запасной аккаунт</b></span><span class="go">›</span></a>
+  <a class="btn" data-ext href="https://t.me/morpheus22222" target="_blank" rel="noopener"><span class="ic tg"><svg width="31" height="31" viewBox="0 0 24 24" fill="#fff"><path d="M21.9 4.6 18.7 19.7c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9-8.2c.4-.4-.1-.6-.6-.2L6.3 13.3l-4.8-1.5c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.6z"/></svg></span><span><b data-i="tg">Мой Telegram-канал</b></span><span class="go">›</span></a>
 
   <div class="foot"><span data-i="foot">© Morfeus · Спасибо, что ты здесь</span> <span id="tOpen" style="padding:6px;cursor:pointer">❤️</span></div>
 </main>
@@ -167,10 +175,21 @@
     <div class="acts"><button class="thx" id="thx" data-i="thx">🔮 Поблагодарить Морфеуса</button><button class="cls" id="cls" data-i="close">Закрыть</button></div>
   </div>
 </div>
+<div class="ov" id="ext" role="dialog" aria-modal="true">
+  <div class="extbox">
+    <div class="extlock">🔒</div>
+    <h2 data-i="extT">TikTok не даёт открыть ссылку</h2>
+    <p data-i="extP">Скопируй ссылку и открой её в браузере.</p>
+    <div class="exturl" id="extUrl"></div>
+    <button class="thx" id="extCopy" data-i="extCopy">📋 Скопировать ссылку</button>
+    <p class="exthint" data-i="extHint">Или нажми ⋯ вверху справа → «Открыть в браузере»: там все кнопки работают.</p>
+    <div class="acts"><a class="extlink" id="extTry" target="_blank" rel="noopener" data-i="extTry">Попробовать открыть</a><button class="cls" id="extCls" data-i="close">Закрыть</button></div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 <!-- временный тест: какие способы открытия пропускает TikTok (открывается тапом по сердечку внизу) -->
 <div id="tPanel" style="display:none;position:fixed;inset:0;z-index:80;background:#14062a;overflow:auto;padding:16px 14px 40px;text-align:left">
-  <div style="font-weight:800;font-size:19px;margin-bottom:4px">🧪 Тест: что пропускает TikTok</div>
+  <div style="font-weight:800;font-size:19px;margin-bottom:4px">🧪 Тест №2: что пропускает TikTok</div>
   <div style="font-size:13px;color:rgba(255,255,255,.75);margin-bottom:12px">Нажимайте по очереди. Запомните номера, где открылось то, что написано. Потом пришлите номера и скриншот.</div>
   <div id="tList"></div>
   <div id="tLog" style="margin-top:10px;background:#000;border-radius:10px;padding:10px;font:11px/1.4 ui-monospace,Menlo,monospace;color:#9fe39f;word-break:break-all"></div>
@@ -213,10 +232,10 @@
 
   // ---------- языки: русский основной, украинский ----------
   var TXT = {
-    ru:{tap:"ТЯНИ КАРТУ!",jar:"Донат в Банку «На мечту»",jarS:"Любой картой, Apple Pay или Google Pay",bio1:"♌ Батлы 🥊 Эфиры 📺",bio2:"🐈‍⬛ Мутим позитив",today:"Твоя карта дня",donT:"ДОНАТ",mono:"Перевод на карту Монобанка",monoS:"Нажми, чтобы скопировать номер · •••• 7504",monoOk:"Номер карты скопирован ✓",
+    ru:{tap:"ТЯНИ КАРТУ!",extT:"TikTok не даёт открыть ссылку",extP:"Скопируй ссылку и открой её в браузере.",extCopy:"📋 Скопировать ссылку",extOk:"Скопировано ✓ Вставь в браузере",extHint:"Или нажми ⋯ вверху справа → «Открыть в браузере»: там все кнопки работают.",extTry:"Попробовать открыть",jar:"Донат в Банку «На мечту»",jarS:"Любой картой, Apple Pay или Google Pay",bio1:"♌ Батлы 🥊 Эфиры 📺",bio2:"🐈‍⬛ Мутим позитив",today:"Твоя карта дня",donT:"ДОНАТ",mono:"Перевод на карту Монобанка",monoS:"Нажми, чтобы скопировать номер · •••• 7504",monoOk:"Номер карты скопирован ✓",
         pagesT:"МОИ СТРАНИЦЫ",tt1:"Мой основной аккаунт",tt2:"Мой запасной аккаунт",tg:"Мой Telegram-канал",foot:"© Morfeus · Спасибо, что ты здесь",again:"Это твоя карта на сегодня 🔮",next:"Новая карта через",
         thx:"🔮 Поблагодарить Морфеуса",close:"Закрыть",copied:"Номер карты скопирован. Вставь его в приложении банка 💛",title:"Morfeus — карта дня, батлы и донат"},
-    uk:{tap:"ТЯГНИ КАРТУ!",jar:"Донат у Банку «На мечту»",jarS:"Будь-якою карткою, Apple Pay або Google Pay",bio1:"♌ Батли 🥊 Ефіри 📺",bio2:"🐈‍⬛ Мутимо позитив",today:"Твоя карта дня",donT:"ДОНАТ",mono:"Переказ на картку Монобанку",monoS:"Натисни, щоб скопіювати номер · •••• 7504",monoOk:"Номер картки скопійовано ✓",
+    uk:{tap:"ТЯГНИ КАРТУ!",extT:"TikTok не дає відкрити посилання",extP:"Скопіюй посилання та відкрий його в браузері.",extCopy:"📋 Скопіювати посилання",extOk:"Скопійовано ✓ Встав у браузері",extHint:"Або натисни ⋯ вгорі праворуч → «Відкрити в браузері»: там усі кнопки працюють.",extTry:"Спробувати відкрити",jar:"Донат у Банку «На мечту»",jarS:"Будь-якою карткою, Apple Pay або Google Pay",bio1:"♌ Батли 🥊 Ефіри 📺",bio2:"🐈‍⬛ Мутимо позитив",today:"Твоя карта дня",donT:"ДОНАТ",mono:"Переказ на картку Монобанку",monoS:"Натисни, щоб скопіювати номер · •••• 7504",monoOk:"Номер картки скопійовано ✓",
         pagesT:"МОЇ СТОРІНКИ",tt1:"Мій основний акаунт",tt2:"Мій запасний акаунт",tg:"Мій Telegram-канал",foot:"© Morfeus · Дякую, що ти тут",again:"Це твоя карта на сьогодні 🔮",next:"Нова карта через",
         thx:"🔮 Подякувати Морфеусу",close:"Закрити",copied:"Номер картки скопійовано. Встав його в застосунку банку 💛",title:"Morfeus — карта дня, батли та донат"}
   };
@@ -371,21 +390,41 @@
     if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(CARD_NUMBER).then(done,fb) } else fb();
   }
   document.getElementById('mono').addEventListener('click',function(e){ e.preventDefault(); copyCard() });
-  document.getElementById('thx').addEventListener('click',function(){ window.open(JAR,'_blank','noopener'); closeCard() });
+  // ---------- внутри TikTok ----------
+  // Гостям TikTok не даёт уйти с первой страницы сайта (экран «Откройте ссылку в браузере»).
+  // Проверено на телефоне: работает только внутренняя ссылка TikTok на профиль и копирование.
+  var inTikTok=/musical_ly|BytedanceWebview|TikTok|trill/i.test(navigator.userAgent)||/[?&]tt=1/.test(location.search);
+  var ext=document.getElementById('ext');
+  function copyText(t, ok){
+    function fb(){ var a=document.createElement('textarea'); a.value=t; a.style.position='fixed'; a.style.opacity='0'; document.body.appendChild(a); a.select(); try{document.execCommand('copy')}catch(x){} a.remove(); ok() }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(ok,fb) } else fb();
+  }
+  function openExt(url){
+    document.getElementById('extUrl').textContent=url; document.getElementById('extTry').href=url;
+    document.getElementById('extCopy').textContent=L().extCopy; ext.classList.add('show');
+  }
+  document.getElementById('extCopy').addEventListener('click',function(){ var b=this; copyText(document.getElementById('extUrl').textContent,function(){ b.textContent=L().extOk; buzz(30) }) });
+  document.getElementById('extCls').addEventListener('click',function(){ ext.classList.remove('show') });
+  ext.addEventListener('click',function(e){ if(e.target===ext) ext.classList.remove('show') });
+  function goOut(url){ if(inTikTok) openExt(url); else window.open(url,'_blank','noopener') }
+  if(inTikTok){
+    document.querySelectorAll('a[data-tt]').forEach(function(a){ a.href='snssdk1233://user/profile/'+a.getAttribute('data-tt'); a.removeAttribute('target') });
+    document.querySelectorAll('a[data-ext]').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); openExt(a.href) }) });
+  }
+  document.getElementById('thx').addEventListener('click',function(){ closeCard(); goOut(JAR) });
 
   // ---------- временный тест способов открытия (тап по сердечку внизу) ----------
   (function(){
     var ua=navigator.userAgent, ios=!/Android/.test(ua)&&(/iP(hone|ad|od)/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1));
     var J='send.monobank.ua/jar/tfSnGPdcs', UID='7189722322201953285';
+    var E=encodeURIComponent, JU='https://'+J;
     var T=[
-      ['Банка → в '+(ios?'Safari':'браузере телефона')+' (способ А)', ios?'x-safari-https://'+J:'intent://'+J+'#Intent;scheme=https;action=android.intent.action.VIEW;end'],
-      ['Банка → в '+(ios?'Safari':'Chrome')+' (способ Б)', ios?'com-apple-mobilesafari-tab:https://'+J:'intent://'+J+'#Intent;scheme=https;package=com.android.chrome;end'],
-      ['Telegram → приложение Telegram', 'tg://resolve?domain=morpheus22222'],
-      ['Профиль Морфеуса → в приложении TikTok', 'snssdk1233://user/profile/'+UID],
-      ['Банка → новое окно', function(){ var w=window.open('https://'+J,'_blank'); return w?'окно создано':'окно не создано' }],
-      ['Эта же страница заново (должна перезагрузиться)', location.pathname+'?t='+Date.now()],
-      ['Скопировать ссылку на банку', function(){ try{ var t=document.createElement('textarea'); t.value='https://'+J; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); var ok=document.execCommand('copy'); t.remove();
-          if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText('https://'+J); return ok?'скопировано ✓':'не скопировалось ✗' }catch(e){ return 'ошибка: '+e } }]
+      ['Банка → окно TikTok (способ 1)', 'snssdk1233://webview?url='+E(JU)],
+      ['Банка → окно TikTok (способ 2)', 'snssdk1180://webview?url='+E(JU)],
+      ['Банка → окно TikTok (способ 3)', 'aweme://webview/?url='+E(JU)],
+      ['Банка → через страницу TikTok «Открыть»', 'snssdk1233://webview?url='+E('https://www.tiktok.com/link/v2?aid=1988&lang=ru&scene=bio_url&target='+E(JU))],
+      ['Telegram → окно TikTok', 'snssdk1233://webview?url='+E('https://t.me/morpheus22222')],
+      ['Запасной профиль → в приложении TikTok', 'snssdk1233://user/profile/7410411212621005856']
     ];
     var list=document.getElementById('tList'), log=document.getElementById('tLog');
     function L(t){ log.textContent=t+'\n'+log.textContent }
@@ -397,7 +436,6 @@
       list.appendChild(b);
     });
     L((ios?'iPhone':'Android/другое')+' · '+ua);
-    if(/[?&]t=\d/.test(location.search)) L('6: страница перезагрузилась ✓');
     document.getElementById('tOpen').addEventListener('click',function(){ document.getElementById('tPanel').style.display='block' });
     document.getElementById('tClose').addEventListener('click',function(){ document.getElementById('tPanel').style.display='none' });
     if(/[?&]t=\d/.test(location.search)) document.getElementById('tPanel').style.display='block';
