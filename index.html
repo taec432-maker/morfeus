@@ -197,6 +197,24 @@
 </div>
 
 <script>
+// Автообновление: телефон (особенно браузер TikTok) может показывать старую копию страницы.
+// При открытии сверяем номер версии с сервером и, если на сервере новее, подгружаем свежую страницу на месте.
+(function(){
+  var VER='13';
+  try{
+    fetch('version.json?'+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+      if(!j||!j.v||String(j.v)===VER) return;
+      var tried=null; try{ tried=sessionStorage.getItem('mf_upd') }catch(e){}
+      if(tried===String(j.v)) return;                       // уже пробовали эту версию — не зацикливаемся
+      try{ sessionStorage.setItem('mf_upd',String(j.v)) }catch(e){}
+      return fetch('index.html?'+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(h){
+        if(h && h.indexOf("VER='"+j.v+"'")>0){ document.open(); document.write(h); document.close() }
+      });
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
+<script>
 (function(){
   var CARD_NUMBER = "4441111047477504";
   var JAR = "https://send.monobank.ua/jar/tfSnGPdcs";   // банка «На мечту»; ?a=СУММА подставляет сумму       // карта Монобанка (на экране видны только последние 4 цифры)
