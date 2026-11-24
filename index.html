@@ -147,7 +147,7 @@
   <a class="btn" data-tt="7410411212621005856" href="https://www.tiktok.com/@yurkaleo" target="_blank" rel="noopener"><span class="ic tt"><svg width="31" height="31" viewBox="0 0 24 24" fill="#fff"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9a7.3 7.3 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg></span><span><b data-i="tt2">Мой запасной аккаунт</b></span><span class="go">›</span></a>
   <a class="btn" data-ext href="https://t.me/morpheus22222" target="_blank" rel="noopener"><span class="ic tg"><svg width="31" height="31" viewBox="0 0 24 24" fill="#fff"><path d="M21.9 4.6 18.7 19.7c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9-8.2c.4-.4-.1-.6-.6-.2L6.3 13.3l-4.8-1.5c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.6z"/></svg></span><span><b data-i="tg">Мой Telegram-канал</b></span><span class="go">›</span></a>
 
-  <div class="foot"><span data-i="foot">© Morfeus · Спасибо, что ты здесь</span> <span id="tOpen" style="padding:6px;cursor:pointer">❤️</span></div>
+  <div class="foot"><span data-i="foot">© Morfeus · Спасибо, что ты здесь</span> ❤️</div>
 </main>
 
 <div class="cat" id="cat" aria-hidden="true"><img src="img/cat_open.png" alt=""><img class="shut" src="img/cat_closed.png" alt=""></div>
@@ -172,7 +172,7 @@
 // Автообновление: телефон (особенно браузер TikTok) может показывать старую копию страницы.
 // При открытии сверяем номер версии с сервером и, если на сервере новее, подгружаем свежую страницу на месте.
 (function(){
-  var VER='15';
+  var VER='16';
   try{
     fetch('version.json?'+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
       if(!j||!j.v||String(j.v)===VER) return;
@@ -393,34 +393,6 @@
     document.querySelectorAll('a[data-ext]').forEach(function(a){ a.href=ttUrl(a.href); a.removeAttribute('target') });
   }
   document.getElementById('thx').addEventListener('click',function(){ closeCard(); goOut(JAR) });
-
-  // ---------- ВРЕМЕННЫЙ ТЕСТ №3 (Telegram), открывается тапом по сердечку внизу ----------
-  (function(){
-    var E=encodeURIComponent, W='snssdk1233://webview?url=', TG='https://t.me/morpheus22222', SITE='https://taec432-maker.github.io/morfeus/';
-    var T=[
-      ['Telegram: как сейчас на кнопке', W+E(TG)],
-      ['Telegram: через страницу TikTok «Открыть»', W+E('https://www.tiktok.com/link/v2?aid=1988&lang=ru&scene=bio_url&target='+E(TG))],
-      ['Telegram: страничка с кнопкой «Открыть в Telegram»', W+E(SITE+'tg.html')],
-      ['Telegram: читать канал прямо в TikTok', W+E('https://t.me/s/morpheus22222')],
-      ['Telegram: сразу приложение (способ А)', W+E('tg://resolve?domain=morpheus22222')],
-      ['Telegram: сразу приложение (способ Б)', 'aweme://webview/?url='+E(TG)],
-      ['Telegram: другой адрес telegram.me', W+E('https://telegram.me/morpheus22222')]
-    ];
-    var p=document.createElement('div');
-    p.style.cssText='display:none;position:fixed;inset:0;z-index:80;background:#14062a;overflow:auto;padding:16px 14px 40px;text-align:left';
-    p.innerHTML='<div style="font-weight:800;font-size:19px;margin-bottom:4px">🧪 Тест №3: Telegram</div><div style="font-size:13px;color:rgba(255,255,255,.75);margin-bottom:12px">Нажимайте по очереди и возвращайтесь назад. Напишите номера, где открылся Telegram или канал, и что было на остальных.</div>';
-    T.forEach(function(x,i){
-      var b=document.createElement('a'); b.href=x[1];
-      b.style.cssText='display:flex;align-items:center;gap:12px;margin:0 0 9px;padding:12px 13px;border:1px solid rgba(255,201,51,.5);border-radius:14px;background:#2a0f4a;color:#fff;font:700 15px/1.25 -apple-system,sans-serif;text-decoration:none';
-      b.innerHTML='<span style="flex:none;width:32px;height:32px;border-radius:50%;background:#ffc933;color:#1a0b2e;display:grid;place-items:center;font-weight:900">'+(i+1)+'</span><span>'+x[0]+'</span>';
-      p.appendChild(b);
-    });
-    var c=document.createElement('button'); c.textContent='Закрыть тест';
-    c.style.cssText='margin-top:12px;border:0;border-radius:999px;padding:11px 20px;font:800 15px/1 -apple-system,sans-serif;background:rgba(255,255,255,.14);color:#fff';
-    c.addEventListener('click',function(){ p.style.display='none' }); p.appendChild(c);
-    document.body.appendChild(p);
-    document.getElementById('tOpen').addEventListener('click',function(){ p.style.display='block' });
-  })();
 
   applyLang();
 })();
