@@ -73,6 +73,10 @@
   a.btn.main{background:linear-gradient(135deg,var(--gold),#ff9f1a);color:#1a0b2e;border:0;box-shadow:0 8px 26px rgba(255,170,30,.35)}
   a.btn.main small{color:rgba(26,11,46,.75)} a.btn.main .go{color:#1a0b2e}
   a.btn .ic.mono{background:#000;color:#fff;font:800 11px/1 -apple-system,sans-serif;letter-spacing:-.03em}
+  a.btn .ic.jar{background:#fff;font-size:26px}
+  .sums{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:-2px 0 14px}
+  .sums a{display:block;padding:11px 0;border-radius:14px;text-align:center;text-decoration:none;font-weight:800;font-size:16px;color:var(--gold2);background:rgba(30,10,56,.78);border:1px solid rgba(255,201,51,.55);transition:transform .15s,background .15s}
+  .sums a:active{transform:scale(.94);background:rgba(255,201,51,.25)}
   .ic.tt{background:#000}
   .ic.tg{background:#2aabee}
   .foot{margin-top:26px;color:rgba(255,255,255,.5);font-size:12px}
@@ -135,7 +139,9 @@
   <button class="today" id="todayBtn"><img id="todayImg" src="img/card_back.jpg" alt=""><span><small data-i="today">Твоя карта дня</small><b id="todayName"></b></span></button>
 
   <div class="sec" data-i="donT">ДОНАТ</div>
-  <a class="btn main" id="mono" href="#"><span class="ic mono">mono</span><span><b data-i="mono">Донат на карту Монобанка</b><small id="monoSub" data-i="monoS">Нажми, чтобы скопировать номер · •••• 7504</small></span><span class="go">›</span></a>
+  <a class="btn main" id="jar" href="https://send.monobank.ua/jar/tfSnGPdcs" target="_blank" rel="noopener"><span class="ic jar">🫙</span><span><b data-i="jar">Донат в Банку «На мечту»</b><small data-i="jarS">Любой картой, Apple Pay или Google Pay</small></span><span class="go">›</span></a>
+  <div class="sums" id="sums"><a data-a="50">50 ₴</a><a data-a="100">100 ₴</a><a data-a="200">200 ₴</a><a data-a="500">500 ₴</a></div>
+  <a class="btn" id="mono" href="#"><span class="ic mono">mono</span><span><b data-i="mono">Перевод на карту Монобанка</b><small id="monoSub" data-i="monoS">Нажми, чтобы скопировать номер · •••• 7504</small></span><span class="go">›</span></a>
 
   <div class="sec" data-i="pagesT">МОИ СТРАНИЦЫ</div>
   <a class="btn" href="https://www.tiktok.com/@yurkaleo" target="_blank" rel="noopener"><span class="ic tt"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9a7.3 7.3 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg></span><span><b data-i="tt1">Мой TikTok</b></span><span class="go">›</span></a>
@@ -166,7 +172,8 @@
 
 <script>
 (function(){
-  var CARD_NUMBER = "4441111047477504";       // карта Монобанка (на экране видны только последние 4 цифры)
+  var CARD_NUMBER = "4441111047477504";
+  var JAR = "https://send.monobank.ua/jar/tfSnGPdcs";   // банка «На мечту»; ?a=СУММА подставляет сумму       // карта Монобанка (на экране видны только последние 4 цифры)
 
   // ---------- 22 карты дня ----------
   var CARDS = [
@@ -199,10 +206,10 @@
 
   // ---------- языки: русский основной, украинский ----------
   var TXT = {
-    ru:{tap:"ТЯНИ КАРТУ!",bio1:"♌ Батлы 🥊 Эфиры 📺",bio2:"🐈‍⬛ Мутим позитив",today:"Твоя карта дня",donT:"ДОНАТ",mono:"Донат на карту Монобанка",monoS:"Нажми, чтобы скопировать номер · •••• 7504",monoOk:"Номер карты скопирован ✓",
+    ru:{tap:"ТЯНИ КАРТУ!",jar:"Донат в Банку «На мечту»",jarS:"Любой картой, Apple Pay или Google Pay",bio1:"♌ Батлы 🥊 Эфиры 📺",bio2:"🐈‍⬛ Мутим позитив",today:"Твоя карта дня",donT:"ДОНАТ",mono:"Перевод на карту Монобанка",monoS:"Нажми, чтобы скопировать номер · •••• 7504",monoOk:"Номер карты скопирован ✓",
         pagesT:"МОИ СТРАНИЦЫ",tt1:"Мой TikTok",tt2:"Запасной TikTok",tg:"Мой Telegram-канал",foot:"© Morfeus · Спасибо, что ты здесь ❤️",again:"Это твоя карта на сегодня 🔮",next:"Новая карта через",
         thx:"🔮 Поблагодарить Морфеуса",close:"Закрыть",copied:"Номер карты скопирован. Вставь его в приложении банка 💛",title:"Morfeus — карта дня, батлы и донат"},
-    uk:{tap:"ТЯГНИ КАРТУ!",bio1:"♌ Батли 🥊 Ефіри 📺",bio2:"🐈‍⬛ Мутимо позитив",today:"Твоя карта дня",donT:"ДОНАТ",mono:"Донат на картку Монобанку",monoS:"Натисни, щоб скопіювати номер · •••• 7504",monoOk:"Номер картки скопійовано ✓",
+    uk:{tap:"ТЯГНИ КАРТУ!",jar:"Донат у Банку «На мечту»",jarS:"Будь-якою карткою, Apple Pay або Google Pay",bio1:"♌ Батли 🥊 Ефіри 📺",bio2:"🐈‍⬛ Мутимо позитив",today:"Твоя карта дня",donT:"ДОНАТ",mono:"Переказ на картку Монобанку",monoS:"Натисни, щоб скопіювати номер · •••• 7504",monoOk:"Номер картки скопійовано ✓",
         pagesT:"МОЇ СТОРІНКИ",tt1:"Мій TikTok",tt2:"Запасний TikTok",tg:"Мій Telegram-канал",foot:"© Morfeus · Дякую, що ти тут ❤️",again:"Це твоя карта на сьогодні 🔮",next:"Нова карта через",
         thx:"🔮 Подякувати Морфеусу",close:"Закрити",copied:"Номер картки скопійовано. Встав його в застосунку банку 💛",title:"Morfeus — карта дня, батли та донат"}
   };
@@ -318,7 +325,8 @@
     if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(CARD_NUMBER).then(done,fb) } else fb();
   }
   document.getElementById('mono').addEventListener('click',function(e){ e.preventDefault(); copyCard() });
-  document.getElementById('thx').addEventListener('click',function(){ closeCard(); copyCard(); document.getElementById('mono').scrollIntoView({behavior:'smooth',block:'center'}) });
+  document.querySelectorAll('#sums a').forEach(function(a){ a.href=JAR+'?a='+a.getAttribute('data-a'); a.target='_blank'; a.rel='noopener' });
+  document.getElementById('thx').addEventListener('click',function(){ window.open(JAR,'_blank','noopener'); closeCard() });
 
   applyLang();
 })();
